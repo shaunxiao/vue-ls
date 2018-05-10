@@ -1,4 +1,4 @@
-import { WebStorageEvent } from './';
+import {WebStorageEvent} from './';
 
 /**
  * Storage Bridge
@@ -60,7 +60,21 @@ export class WebStorage {
       expire: expire !== null ? new Date().getTime() + expire : null,
     });
 
+    const oldValue = this.get(name);
     this.storage.setItem(this.options.namespace + name, stringifyValue);
+    if (typeof window !== 'undefined') {
+      for (const i in this.options.events) {
+        if (window.dispatchEvent) {
+          const event = new Event(this.options.events[i]);
+          event.key = name;
+          event.oldValue = oldValue;
+          event.newValue = stringifyValue;
+          event.url = window.location.href;
+          event.storageArea = this.storage;
+          window.dispatchEvent(event);
+        }
+      }
+    }
   }
 
   /**

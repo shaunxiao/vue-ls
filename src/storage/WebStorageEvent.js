@@ -47,7 +47,6 @@ export class WebStorageEvent {
         return data;
       }
     };
-
     const fire = (listener) => {
       const newValue = getValue(e.newValue);
       const oldValue = getValue(e.oldValue);

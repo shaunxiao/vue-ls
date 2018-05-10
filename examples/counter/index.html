@@ -37,7 +37,10 @@
                 this.counter = this.$ls.get('counter', 0);
                 var _this = this;
                 this.$ls.on('counter', function (val) {
-                    _this.counter = val;
+                  console.log("counter change : " + val)
+                  if (val == undefined) return
+
+                  _this.counter = val;
                 });
             },
             methods: {
